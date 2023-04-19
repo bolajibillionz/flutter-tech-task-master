@@ -3,10 +3,8 @@ import 'package:tech_task/app/models/response_model/get_recipe_response_model.da
 import 'package:tech_task/app/presentation/recipe_screen.dart';
 import 'package:tech_task/app/services/get_ingredient_service.dart';
 import 'package:tech_task/app/services/get_recipes_services.dart';
-import 'package:tech_task/core/constants.dart';
 import 'package:tech_task/core/size_config.dart';
 import 'package:tech_task/core/widgets/top_snackbar_widget.dart';
-
 import '../../core/utils.dart';
 import '../../core/widgets/custom_text_widget.dart';
 import '../models/response_model/get_ingredient_response_model.dart';
@@ -49,6 +47,7 @@ class _IngredientScreenState extends State<IngredientScreen> {
                   height: getProportionateScreenHeight(15),
                 ),
                 FutureBuilder(
+                  key: const ValueKey('future_builder'),
                     future: getIngredients(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -118,10 +117,10 @@ class _IngredientScreenState extends State<IngredientScreen> {
                         inputText: 'Get Recipe',
                         fontSize: 20.0,
                         weight: FontWeight.bold,
-                        textColor: Palette.whiteColor),
+                        textColor: Colors.white),
                     style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        backgroundColor: Palette.primaryColor,
+                        backgroundColor: Colors.blue,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         )),
@@ -163,7 +162,7 @@ class _IngredientScreenState extends State<IngredientScreen> {
                         fontSize: title.length > 9
                             ? getProportionateScreenWidth(10)
                             : getProportionateScreenWidth(12),
-                        color: Palette.blackColor),
+                        color: Colors.black),
                   ),
                   ingredientExpired
                       ? Text(' (expired)',
@@ -178,7 +177,7 @@ class _IngredientScreenState extends State<IngredientScreen> {
               ),
               Row(
                 children: [
-                  Text(date, style: TextStyle(color: Palette.blackColor)),
+                  Text(date, style: TextStyle(color: Colors.black)),
                 ],
               ),
               ingredientExpired

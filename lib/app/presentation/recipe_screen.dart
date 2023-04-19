@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tech_task/app/models/response_model/get_recipe_response_model.dart';
 import 'package:tech_task/app/services/get_ingredient_service.dart';
 import 'package:tech_task/app/services/get_recipes_services.dart';
-import 'package:tech_task/core/constants.dart';
 import 'package:tech_task/core/size_config.dart';
-
 import '../../core/utils.dart';
 import '../../core/widgets/custom_text_widget.dart';
 import '../models/response_model/get_ingredient_response_model.dart';
@@ -78,10 +76,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
                         inputText: 'Thanks',
                         fontSize: 20.0,
                         weight: FontWeight.bold,
-                        textColor: Palette.whiteColor),
+                        textColor: Colors.white),
                     style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        backgroundColor: Palette.primaryColor,
+                        backgroundColor: Colors.blue,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         )),
@@ -106,7 +104,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
       width: double.infinity,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Palette.primaryColor)),
+          border: Border.all(color: Colors.blue)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -121,17 +119,13 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   itemBuilder: (context, index) {
                     var data = ingredients[index].toString();
                     return Container(
-                      
-                      margin: EdgeInsets.symmetric(
-                        vertical: getProportionateScreenHeight(5)
-                      ),
-                      height: getProportionateScreenHeight(25),
-                      decoration: BoxDecoration(
-                        color: Palette.primaryColor,
-                        borderRadius: BorderRadius.circular(8)
-                      ),
-                      
-                      child: Center(child: Text(data)));
+                        margin: EdgeInsets.symmetric(
+                            vertical: getProportionateScreenHeight(5)),
+                        height: getProportionateScreenHeight(25),
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Center(child: Text(data)));
                   }))
         ],
       ),
