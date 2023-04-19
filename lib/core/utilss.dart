@@ -1,6 +1,6 @@
 
 
-bool isExpired(String date) {
+bool isExpired({required String date, required DateTime lunchDate }) {
   var expiryDate = DateTime.parse(date);
-  return expiryDate.isBefore(DateTime.now());
+  return expiryDate.isBefore(lunchDate);
 }

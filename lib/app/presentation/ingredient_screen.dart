@@ -76,12 +76,12 @@ class _IngredientScreenState extends State<IngredientScreen> {
                                 var data = snapshot.data![index];
                                 String title = data.title.toString();
                                 String useBy = data.useBy.toString();
-                                bool expired = isExpired(useBy);
+                                bool expired = isExpired(date: useBy, lunchDate: widget.lunchDate);
                                 print(expired);
                                 return buildIngredientList(
                                     ingredientExpired: expired,
                                     onPressed:
-                                        // expired ? null :
+                                        expired ? null :
                                         () {
                                       _toggleIngredientSelection(title);
                                     },
@@ -168,7 +168,7 @@ class _IngredientScreenState extends State<IngredientScreen> {
                 ],
               ),
 
-              //  ingredientExpired ? SizedBox() :
+               ingredientExpired ? SizedBox() :
               CheckboxListTile(
                 value: _isIngredientSelected(title),
                 activeColor: Colors.green,
