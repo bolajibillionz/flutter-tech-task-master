@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tech_task/app/models/response_model/get_recipe_response_model.dart';
+import 'package:tech_task/app/presentation/recipe_screen.dart';
 import 'package:tech_task/app/services/get_ingredient_service.dart';
+import 'package:tech_task/app/services/get_recipes_services.dart';
 import 'package:tech_task/core/constants.dart';
 import 'package:tech_task/core/size_config.dart';
+import 'package:tech_task/core/widgets/top_snackbar_widget.dart';
 
-import '../../core/utilss.dart';
+import '../../core/utils.dart';
 import '../../core/widgets/custom_text_widget.dart';
 import '../models/response_model/get_ingredient_response_model.dart';
 
@@ -19,9 +23,6 @@ class _IngredientScreenState extends State<IngredientScreen> {
   List<String> _selectedIngredients = [];
   Future<List<Ingredient>> getIngredients() async {
     var result = await GetIngredientsService.get();
-
-    print(result);
-
     return result;
   }
 
@@ -41,7 +42,7 @@ class _IngredientScreenState extends State<IngredientScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Ingredients',
+                  'Available Ingredients',
                   style: TextStyle(fontSize: getProportionateScreenWidth(24.0)),
                 ),
                 SizedBox(
@@ -76,15 +77,19 @@ class _IngredientScreenState extends State<IngredientScreen> {
                                 var data = snapshot.data![index];
                                 String title = data.title.toString();
                                 String useBy = data.useBy.toString();
-                                bool expired = isExpired(date: useBy, lunchDate: widget.lunchDate);
-                                print(expired);
+                                bool expired = isExpired(
+                                    date: useBy, lunchDate: widget.lunchDate);
                                 return buildIngredientList(
                                     ingredientExpired: expired,
-                                    onPressed:
-                                        expired ? null :
-                                        () {
-                                      _toggleIngredientSelection(title);
-                                    },
+                                    onPressed: expired
+                                        ? () {
+                                            warningTopSnackBar(
+                                                context: context,
+                                                message: 'Expired Ingredient');
+                                          }
+                                        : () {
+                                            _toggleIngredientSelection(title);
+                                          },
                                     title: title,
                                     date: useBy);
                               }),
@@ -96,9 +101,18 @@ class _IngredientScreenState extends State<IngredientScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      print(_selectedIngredients);
-                      var ijij = _selectedIngredients.join(',');
-                      print(ijij);
+                      if (_selectedIngredients.isEmpty) {
+                        warningTopSnackBar(
+                            context: context,
+                            message: 'No ingredient selected');
+                      } else {
+                        var recipe = _selectedIngredients.join(',');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    RecipeScreen(recipe: recipe)));
+                      }
                     },
                     child: createCustomText(
                         inputText: 'Get Recipe',
@@ -167,13 +181,13 @@ class _IngredientScreenState extends State<IngredientScreen> {
                   Text(date, style: TextStyle(color: Palette.blackColor)),
                 ],
               ),
-
-               ingredientExpired ? SizedBox() :
-              CheckboxListTile(
-                value: _isIngredientSelected(title),
-                activeColor: Colors.green,
-                onChanged: (value) {},
-              ),
+              ingredientExpired
+                  ? SizedBox()
+                  : CheckboxListTile(
+                      value: _isIngredientSelected(title),
+                      activeColor: Colors.green,
+                      onChanged: (value) {},
+                    ),
             ],
           ),
         ),

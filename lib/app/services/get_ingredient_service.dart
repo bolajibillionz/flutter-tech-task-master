@@ -9,14 +9,10 @@ class GetIngredientsService {
   static Future<List<Ingredient>> get() async {
     final url = ApiEndpoint.getIngredients();
 
-    print(url);
-
     try {
       var response = await dio.get(
         url,
       );
-      print(response.data);
-      print(response.statusCode);
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
         return data.map((ingredient) => Ingredient.fromJson(ingredient)).toList();

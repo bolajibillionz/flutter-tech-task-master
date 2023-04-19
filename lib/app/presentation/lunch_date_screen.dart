@@ -55,19 +55,24 @@ class _ChooseLunchDateScreenState extends State<ChooseLunchDateScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            createCustomText(
-                inputText: 'Kindly Select the Date of your Lunch',
-                fontSize: 16.0,
-                weight: FontWeight.w400,
-                textColor: Palette.blackColor),
+            
             SizedBox(
               height: getProportionateScreenHeight(50),
             ),
+            Center(
+              child: createCustomText(
+                  inputText: 'Select Date of Lunch',
+                  fontSize: 16.0,
+                  weight: FontWeight.w400,
+                  textColor: Palette.blackColor),
+            ),
+                SizedBox(height: getProportionateScreenHeight(10.0),),
             GestureDetector(
               onTap: () {
                 selectDate();
               },
               child: Container(
+                key: const ValueKey('date_picker'),
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(
                     left: getProportionateScreenWidth(11),
@@ -94,7 +99,7 @@ class _ChooseLunchDateScreenState extends State<ChooseLunchDateScreen> {
               ),
             ),
             SizedBox(
-              height: getProportionateScreenHeight(200),
+              height: getProportionateScreenHeight(400),
             ),
             SizedBox(
               height: getProportionateScreenHeight(60.0),
